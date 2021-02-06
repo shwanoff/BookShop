@@ -6,7 +6,7 @@ namespace BookShop.Bll
 	{
 		IShop Shop { get; }
 		IBook Book { get; }
-		DateTime dateTime { get; }
+		DateTime DateTime { get; }
 
 		void Print();
 	}

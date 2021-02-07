@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D46FBFBC-DD29-4429-9D32-149381CD62CA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>BookShop.App.Cmd</RootNamespace>
-    <AssemblyName>BookShop.App.Cmd</AssemblyName>
+    <ProjectGuid>{4C7BB486-096E-4702-B401-97403B7197D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BookShop.Data.Memory</RootNamespace>
+    <AssemblyName>BookShop.Data.Memory</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,22 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="InMemoryData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <Compile Include="Program.Helpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookShop.Bll\BookShop.Bll.csproj">
       <Project>{70446eb5-e3a5-4d0a-abab-e4b97fcab1ef}</Project>
       <Name>BookShop.Bll</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BookShop.Data.Memory\BookShop.Data.Memory.csproj">
-      <Project>{4c7bb486-096e-4702-b401-97403b7197d0}</Project>
-      <Name>BookShop.Data.Memory</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

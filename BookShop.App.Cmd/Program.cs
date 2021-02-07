@@ -1,4 +1,5 @@
 ﻿using BookShop.Bll;
+using BookShop.Data.Memory;
 using System;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,9 @@ namespace BookShop.App.Cmd
 
 		private static IShop CreateShop(string name, string address)
 		{
-			var shop = new Shop(name, address);
+			var data = new InMemoryData();
+
+			var shop = new Shop(name, address, data, data);
 			return shop;
 		}
 		#endregion
@@ -49,7 +52,7 @@ namespace BookShop.App.Cmd
 							WriteHelpMessage();
 							break;
 						case Command.AddBook:
-							AddBook();
+							AddBook(shop);
 							break;
 						case Command.GetAllBooks:
 							GetAllBooks(shop);
@@ -70,7 +73,7 @@ namespace BookShop.App.Cmd
 			}
 		}
 
-		private static IBook AddBook()
+		private static void AddBook(IShop shop)
 		{
 			Console.WriteLine("Добавление новой книги");
 
@@ -78,16 +81,11 @@ namespace BookShop.App.Cmd
 			var name = ReadNotEmptyLine("Название книги");
 			var price = ReadIntLine("Стоимость книги");
 
-			var book = CreateBook(name, author, price);
+			var book = CreateBook(name, author, price) ?? throw new Exception("Ошибка при добавлении книги");
 
-			if(book != null)
-			{
-				Console.WriteLine("Книга успешно добавлена");
-				Console.WriteLine();
-				return book;
-			}
-
-			throw new Exception("Ошибка при добавлении книги");
+			shop.Add(book);
+			Console.WriteLine("Книга успешно добавлена");
+			Console.WriteLine();
 		}
 
 		private static void GetAllBooks(IShop shop)
@@ -97,7 +95,7 @@ namespace BookShop.App.Cmd
 			var books = shop.GetAllBooks();
 			foreach(var book in books)
 			{
-				Console.WriteLine(book);
+				Console.WriteLine($"\t{book}");
 			}
 			Console.WriteLine();
 		}

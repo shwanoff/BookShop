@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BookShop.DI;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookShop.Bll
 {
@@ -8,19 +10,13 @@ namespace BookShop.Bll
 		private readonly IData<IBook> _bookData;
 		private readonly IData<ICheck> _checkData;
 
-		public string Name { get; }
-		public string Address { get; }
+		public string Name { get; set; }
+		public string Address { get; set; }
 
-		public Shop(string name, string address, IData<IBook> bookData, IData<ICheck> checkData)
+		public Shop(IData<IBook> bookData, IData<ICheck> checkData)
 		{
-			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-			if (string.IsNullOrWhiteSpace(address)) throw new ArgumentNullException(nameof(address));
-
 			_bookData = bookData ?? throw new ArgumentNullException(nameof(bookData));
 			_checkData = checkData ?? throw new ArgumentNullException(nameof(checkData));
-
-			Name = name;
-			Address = address;
 		}
 
 		public void Add(IBook book)
@@ -35,7 +31,15 @@ namespace BookShop.Bll
 
 		public ICheck Sell(IBook book)
 		{
-			var check = new Check(this, book);
+			_bookData.Remove(book);
+
+			var check = new Check()
+			{
+				Book = book,
+				Shop = this,
+				DateTime = DateTime.Now
+			};
+
 			_checkData.Add(check);
 			return check;
 		}

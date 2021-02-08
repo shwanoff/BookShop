@@ -1,16 +1,14 @@
-﻿using BookShop.Bll;
+﻿using BookShop.DI;
 using System.Collections.Generic;
 
 namespace BookShop.Data.Memory
 {
-	public class InMemoryData : IData<IBook>, IData<ICheck>
+	public class CheckMemoryData : IData<ICheck>
 	{
-		private readonly List<IBook> _books;
 		private readonly List<ICheck> _checks;
 
-		public InMemoryData()
+		public CheckMemoryData()
 		{
-			_books = new List<IBook>();
 			_checks = new List<ICheck>();
 		}
 
@@ -19,19 +17,14 @@ namespace BookShop.Data.Memory
 			_checks.Add(item);
 		}
 
-		public void Add(IBook item)
-		{
-			_books.Add(item);
-		}
-
 		public IEnumerable<ICheck> ReadAll()
 		{
 			return _checks;
 		}
 
-		IEnumerable<IBook> IData<IBook>.ReadAll()
+		public void Remove(ICheck item)
 		{
-			return _books;
+			_checks.Remove(item);
 		}
 	}
 }

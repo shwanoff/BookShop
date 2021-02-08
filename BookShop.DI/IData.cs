@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-namespace BookShop.Bll
+namespace BookShop.DI
 {
 	public interface IData<T>
 	{
 		IEnumerable<T> ReadAll();
 		void Add(T item);
+		void Remove(T item);
 	}
 }

@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.2.1\lib\net461\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,15 +53,16 @@
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="Program.Helpers.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BookShop.Bll\BookShop.Bll.csproj">
-      <Project>{70446eb5-e3a5-4d0a-abab-e4b97fcab1ef}</Project>
-      <Name>BookShop.Bll</Name>
+    <ProjectReference Include="..\BookShop.DI\BookShop.DI.csproj">
+      <Project>{f7035022-e441-4cee-b84a-b784b32d6c8c}</Project>
+      <Name>BookShop.DI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BookShop.Data.Memory\BookShop.Data.Memory.csproj">
-      <Project>{4c7bb486-096e-4702-b401-97403b7197d0}</Project>
-      <Name>BookShop.Data.Memory</Name>
+    <ProjectReference Include="..\BookShop.Settings\BookShop.Settings.csproj">
+      <Project>{eb63cd30-96f5-43fa-b18e-bfefd737b874}</Project>
+      <Name>BookShop.Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

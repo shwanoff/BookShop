@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4C7BB486-096E-4702-B401-97403B7197D0}</ProjectGuid>
+    <ProjectGuid>{EB63CD30-96F5-43FA-B18E-BFEFD737B874}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BookShop.Data.Memory</RootNamespace>
-    <AssemblyName>BookShop.Data.Memory</AssemblyName>
+    <RootNamespace>BookShop.Settings</RootNamespace>
+    <AssemblyName>BookShop.Settings</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.2.1\lib\net461\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,11 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckMemoryData.cs" />
-    <Compile Include="BookMemoryData.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookShop.Bll\BookShop.Bll.csproj">
+      <Project>{70446eb5-e3a5-4d0a-abab-e4b97fcab1ef}</Project>
+      <Name>BookShop.Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookShop.Data.Memory\BookShop.Data.Memory.csproj">
+      <Project>{4c7bb486-096e-4702-b401-97403b7197d0}</Project>
+      <Name>BookShop.Data.Memory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BookShop.DI\BookShop.DI.csproj">
       <Project>{f7035022-e441-4cee-b84a-b784b32d6c8c}</Project>
       <Name>BookShop.DI</Name>

@@ -1,24 +1,21 @@
-﻿using System;
+﻿using BookShop.DI;
+using System;
 
 namespace BookShop.Bll
 {
 	public class Check : ICheck
 	{
-		public IShop Shop { get; }
-		public IBook Book { get; }
-		public DateTime DateTime { get; }
+		public IShop Shop { get; set; }
+		public IBook Book { get; set; }
+		public DateTime DateTime { get; set; }
 
-		public Check(IShop shop, IBook book)
+		public string Print()
 		{
-			Shop = shop ?? throw new ArgumentNullException(nameof(shop));
-			Book = book ?? throw new ArgumentNullException(nameof(book));
-
-			DateTime = DateTime.Now;
-		}
-
-		public void Print()
-		{
-			throw new NotImplementedException();
+			return $"Новая продажа в магазине {Shop.Name}\r\n" +
+				   $"по адресу {Shop.Address}\r\n" +
+				   $"{DateTime}\r\n\r\n" +
+				   $"Наименование товара: {Book}\r\n" +
+				   $"Стоимость: {Book.Price}₽\r\n";
 		}
 
 		public override string ToString()

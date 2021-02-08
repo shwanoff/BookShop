@@ -1,6 +1,7 @@
-﻿using BookShop.Bll;
-using BookShop.Data.Memory;
+﻿using BookShop.DI;
+using BookShop.Settings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -9,24 +10,50 @@ namespace BookShop.App.Cmd
 	partial class Program
 	{
 		#region DI - Внедрение зависимости
+		private static Configuration _configuration;
+
+		private static Configuration SetConfiguration()
+		{
+			var configuration = new Configuration();
+			return configuration;
+		}
+
 		private static IBook CreateBook(string name, string author, int price)
 		{
-			var book = new Book(name, author, price);
+			var book = _configuration.Container.GetInstance<IBook>();
+			book.Author = author;
+			book.Name = name;
+			book.Price = price;
+
+			var shop = _configuration.Container.GetInstance<IShop>();
+			shop.Add(book);
+
 			return book;
 		}
 
-		private static ICheck CreateCheck(IShop shop, IBook book)
+		private static ICheck CreateCheck(IBook book)
 		{
-			var check = new Check(shop, book);
+			var shop = _configuration.Container.GetInstance<IShop>();
+			var check = shop.Sell(book);
+
 			return check;
 		}
 
 		private static IShop CreateShop(string name, string address)
 		{
-			var data = new InMemoryData();
+			var shop = _configuration.Container.GetInstance<IShop>();
+			shop.Name = name;
+			shop.Address = address;
 
-			var shop = new Shop(name, address, data, data);
 			return shop;
+		}
+
+		private static IEnumerable<IBook> GetAllBooks()
+		{
+			var shop = _configuration.Container.GetInstance<IShop>();
+			var books = shop.GetAllBooks();
+
+			return books;
 		}
 		#endregion
 
@@ -34,6 +61,8 @@ namespace BookShop.App.Cmd
 		{
 			try
 			{
+				_configuration = SetConfiguration();
+
 				var shop = CreateShop("Black Books", "13 Little Bevan Street, Bloomsbury, London");
 
 				Console.OutputEncoding = Encoding.UTF8;
@@ -52,13 +81,13 @@ namespace BookShop.App.Cmd
 							WriteHelpMessage();
 							break;
 						case Command.AddBook:
-							AddBook(shop);
+							AddBook();
 							break;
 						case Command.GetAllBooks:
-							GetAllBooks(shop);
+							ShowAllBooks();
 							break;
 						case Command.SellBook:
-							SellBook(shop);
+							SellBook();
 							break;
 						default:
 							WriteErrorMessage("Не обрабатываемая команда. Свяжитесь с разработчиком");
@@ -73,7 +102,7 @@ namespace BookShop.App.Cmd
 			}
 		}
 
-		private static void AddBook(IShop shop)
+		private static void AddBook()
 		{
 			Console.WriteLine("Добавление новой книги");
 
@@ -83,24 +112,23 @@ namespace BookShop.App.Cmd
 
 			var book = CreateBook(name, author, price) ?? throw new Exception("Ошибка при добавлении книги");
 
-			shop.Add(book);
-			Console.WriteLine("Книга успешно добавлена");
+			Console.WriteLine($"Книга [{book}] успешно добавлена");
 			Console.WriteLine();
 		}
 
-		private static void GetAllBooks(IShop shop)
+		private static void ShowAllBooks()
 		{
 			Console.WriteLine("Список всех доступных в магазине книг:");
 
-			var books = shop.GetAllBooks();
-			foreach(var book in books)
+			var books = GetAllBooks();
+			foreach (var book in books)
 			{
 				Console.WriteLine($"\t{book}");
 			}
 			Console.WriteLine();
 		}
 
-		private static void SellBook(IShop shop)
+		private static void SellBook()
 		{
 			Console.WriteLine("Новая продажа книги");
 
@@ -108,7 +136,7 @@ namespace BookShop.App.Cmd
 			while (true)
 			{
 				var name = ReadNotEmptyLine("Название книги");
-				var books = shop.GetAllBooks();
+				var books = GetAllBooks();
 				var result = books.FirstOrDefault(b => b.Name.Equals(name));
 
 				if(result != null)
@@ -120,8 +148,8 @@ namespace BookShop.App.Cmd
 				WriteErrorMessage("Данная книга не найдена");
 			}
 
-			var check = CreateCheck(shop, book);
-			check.Print();
+			var check = CreateCheck(book);
+			Console.WriteLine(check.Print());
 			Console.WriteLine();
 		}
 	}

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace BookShop.Bll
+namespace BookShop.DI
 {
 	public interface IShop
 	{
-		string Name { get; }
-		string Address { get; }
+		string Name { get; set; }
+		string Address { get; set; }
 
 		void Add(IBook book);
 		IEnumerable<IBook> GetAllBooks();

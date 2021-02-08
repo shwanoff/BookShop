@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="Check.cs" />
-    <Compile Include="IBook.cs" />
-    <Compile Include="ICheck.cs" />
-    <Compile Include="IData.cs" />
-    <Compile Include="IShop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shop.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookShop.DI\BookShop.DI.csproj">
+      <Project>{f7035022-e441-4cee-b84a-b784b32d6c8c}</Project>
+      <Name>BookShop.DI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

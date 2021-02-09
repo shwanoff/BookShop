@@ -12,12 +12,6 @@ namespace BookShop.App.Cmd
 		#region DI - Внедрение зависимости
 		private static Configuration _configuration;
 
-		private static Configuration SetConfiguration()
-		{
-			var configuration = new Configuration();
-			return configuration;
-		}
-
 		private static IBook CreateBook(string name, string author, int price)
 		{
 			var book = _configuration.Container.GetInstance<IBook>();
@@ -61,7 +55,7 @@ namespace BookShop.App.Cmd
 		{
 			try
 			{
-				_configuration = SetConfiguration();
+				_configuration = new Configuration();
 
 				var shop = CreateShop("Black Books", "13 Little Bevan Street, Bloomsbury, London");
 
@@ -149,7 +143,11 @@ namespace BookShop.App.Cmd
 			}
 
 			var check = CreateCheck(book);
-			Console.WriteLine(check.Print());
+			Console.WriteLine($"Новая продажа в магазине {check.Shop.Name}");
+			Console.WriteLine($"по адресу {check.Shop.Address}");
+			Console.WriteLine($"{check.DateTime}");
+			Console.WriteLine($"Наименование товара: {check.Book}");
+			Console.WriteLine($"Стоимость: {check.Book.Price}₽");
 			Console.WriteLine();
 		}
 	}

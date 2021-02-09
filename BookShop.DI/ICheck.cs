@@ -7,7 +7,5 @@ namespace BookShop.DI
 		IShop Shop { get; set; }
 		IBook Book { get; set; }
 		DateTime DateTime { get; set; }
-
-		string Print();
 	}
 }

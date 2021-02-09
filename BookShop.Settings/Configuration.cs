@@ -1,5 +1,6 @@
 ﻿using BookShop.Bll;
 using BookShop.Data.Memory;
+using BookShop.Data.Sql;
 using BookShop.DI;
 using SimpleInjector;
 
@@ -21,8 +22,8 @@ namespace BookShop.Settings
 			Container.Register<IBook, Book>(Lifestyle.Transient);
 			Container.Register<ICheck, Check>(Lifestyle.Transient);
 			Container.Register<IShop, Shop>(Lifestyle.Singleton);
-			Container.Register<IData<IBook>, BookMemoryData>(Lifestyle.Singleton);
-			Container.Register<IData<ICheck>, CheckMemoryData>(Lifestyle.Singleton);
+			Container.Register<IData<IBook>, BookSqlData>(Lifestyle.Singleton);
+			Container.Register<IData<ICheck>, CheckSqlData>(Lifestyle.Singleton);
 		}
 	}
 }
